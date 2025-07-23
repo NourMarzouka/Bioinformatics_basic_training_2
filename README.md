@@ -50,7 +50,7 @@ bcftools stats SRR2584866_variants.vcf.gz
 To filter variants with a quality score greater than 30:
 
 ```bash
-bcftools view -i \'QUAL>30\' SRR2584866_variants.vcf.gz > high_quality_variants.vcf
+bcftools view -i "QUAL>30" SRR2584866_variants.vcf.gz > high_quality_variants.vcf
 ```
 
 #### Step 3: Focus on specific region
@@ -58,6 +58,7 @@ bcftools view -i \'QUAL>30\' SRR2584866_variants.vcf.gz > high_quality_variants.
 ```bash
 tabix SRR2584866_variants.vcf.gz CP000819.1:1500-2000
 ```
+or we can use this also
 
 ```bash
 bcftools view SRR2584866_variants.vcf.gz -r CP000819.1:1500-2000 > CP000819.1_1500_2000_variants.vcf
@@ -69,15 +70,7 @@ While `samtools` is primarily used for Sequence Alignment/Map (SAM) and Binary A
 
 **Example `samtools` subfunctions and usage (assuming `SRR2584866.aligned.sorted.bam` exists):**
 
-#### Step 4: Get BAM Statistics
-
-To get a summary of statistics from your BAM file:
-
-```bash
-samtools stats SRR2584866.aligned.sorted.bam
-```
-
-#### Step 5: View BAM Header
+#### Step 4: View BAM Header
 
 To view the header of a BAM file:
 
@@ -85,7 +78,7 @@ To view the header of a BAM file:
 samtools view -H SRR2584866.aligned.sorted.bam
 ```
 
-#### Step 6: Count Reads in BAM
+#### Step 5: Count Reads in BAM
 
 To count the number of reads in a BAM file:
 
@@ -93,7 +86,7 @@ To count the number of reads in a BAM file:
 samtools view -c SRR2584866.aligned.sorted.bam
 ```
 
-#### Step 7: Subset BAM by Region
+#### Step 6: Subset BAM by Region
 
 To extract aligned reads for a specific region (e.g., `CP000819.1:1500-2000`) from a BAM file:
 
