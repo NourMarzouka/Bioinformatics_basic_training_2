@@ -41,7 +41,7 @@ To get a summary of statistics from your VCF file:
 bcftools stats SRR2584866_variants.vcf
 ```
 
-To filter variants with a quality score greater than 200:
+To filter variants with a quality score greater than 30:
 
 ```bash
 bcftools view -i 'QUAL>30' SRR2584866_variants.vcf > high_quality_variants.vcf
