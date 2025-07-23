@@ -1,4 +1,4 @@
-# Understanding VCF Files and Chromosome Analysis for Students
+# Understanding VCF Files and Focus on Specific Regions
 
 This guide provides a simple introduction to Variant Call Format (VCF) files and how they are used in analyzing genetic variations, with a focus on specific regions of chromosomes. It's designed for school students interested in bioinformatics and genomics.
 
