@@ -33,37 +33,51 @@ Analyzing VCF files helps scientists understand genetic differences between indi
 *   **Merging:** Combining VCF files from different samples or experiments.
 *   **Stats:** Generating summary statistics about variations (e.g., number of SNPs, INDELs, quality distributions).
 
-**Example `bcftools` subfunctions and usage with `SRR2584866_variants.vcf`:**
+**Example `bcftools` subfunctions and usage with `SRR2584866_variants.vcf.gz`:**
+
+#### Step 1: Get VCF Statistics
 
 To get a summary of statistics from your VCF file:
 
 ```bash
-bcftools stats SRR2584866_variants.vcf
+gbzip SRR2584866_variants.vcf
+tabix SRR2584866_variants.vcf.gz
+bcftools stats SRR2584866_variants.vcf.gz
 ```
+
+#### Step 2: Filter VCF by Quality
 
 To filter variants with a quality score greater than 30:
 
 ```bash
-bcftools view -i 'QUAL>30' SRR2584866_variants.vcf > high_quality_variants.vcf
+bcftools view -i \'QUAL>30\' SRR2584866_variants.vcf.gz > high_quality_variants.vcf
 ```
 
-To extract only the `CHROM`, `POS`, `REF`, and `ALT` columns from the VCF file:
+#### Step 3: Focus on specific region
 
 ```bash
-bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\n' SRR2584866_variants.vcf
+tabix SRR2584866_variants.vcf.gz CP000819.1:1500-2000
+```
+
+```bash
+bcftools view SRR2584866_variants.vcf.gz -r CP000819.1:1500-2000 > CP000819.1_1500_2000_variants.vcf
 ```
 
 ### 2. `samtools`
 
 While `samtools` is primarily used for Sequence Alignment/Map (SAM) and Binary Alignment/Map (BAM) files (which store aligned sequencing reads), it's often used in conjunction with `bcftools` because VCF files are generated from BAM files. `samtools` can provide statistics on the alignment process, which helps in understanding the quality of the data used to call variants.
 
-**Example `samtools` subfunctions and usage:**
+**Example `samtools` subfunctions and usage (assuming `SRR2584866.aligned.sorted.bam` exists):**
 
-To get a summary of statistics from your BAM file (assuming you have `SRR2584866.aligned.sorted.bam`):
+#### Step 4: Get BAM Statistics
+
+To get a summary of statistics from your BAM file:
 
 ```bash
 samtools stats SRR2584866.aligned.sorted.bam
 ```
+
+#### Step 5: View BAM Header
 
 To view the header of a BAM file:
 
@@ -71,13 +85,23 @@ To view the header of a BAM file:
 samtools view -H SRR2584866.aligned.sorted.bam
 ```
 
+#### Step 6: Count Reads in BAM
+
 To count the number of reads in a BAM file:
 
 ```bash
 samtools view -c SRR2584866.aligned.sorted.bam
 ```
 
-## Focusing on Specific Regions
+#### Step 7: Subset BAM by Region
+
+To extract aligned reads for a specific region (e.g., `CP000819.1:1500-2000`) from a BAM file:
+
+```bash
+samtools view -b SRR2584866.aligned.sorted.bam CP000819.1:1500-2000 > SRR2584866_subset.bam
+```
+
+##  Focusing on Specific Regions
 
 Instead of analyzing an entire genome, scientists often focus on specific chromosomes or even smaller regions of interest. This is particularly useful when studying diseases linked to particular genes or chromosomal abnormalities.
 
@@ -86,25 +110,3 @@ Instead of analyzing an entire genome, scientists often focus on specific chromo
 *   **Targeted Analysis:** Allows for deeper investigation of areas known or suspected to be involved in a particular trait or disease.
 *   **Reduced Computational Load:** Analyzing smaller datasets is faster and requires less computing power.
 *   **Clinical Relevance:** Many genetic disorders are associated with specific chromosomal regions (e.g., Down syndrome with chromosome 21, certain cancers with specific genes on particular chromosomes).
-
-### Common Commands for Region-Specific Analysis:
-
-You can use `samtools` and `bcftools` to extract data for specific chromosomes or regions. Let's use `CP000819.1` as our chromosome name, which is present in the `ecoli_rel606.fasta` and `SRR2584866_variants.vcf` files.
-
-**Example: Extracting data for a specific region on `CP000819.1`**
-
-From the `SRR2584866_variants.vcf` file, we can see variations on `CP000819.1` at various positions. Let's pick a region, for example, from position `1500` to `2000` on `CP000819.1`.
-
-To extract variants within this region from `SRR2584866_variants.vcf`:
-
-```bash
-bcftools view SRR2584866_variants.vcf -r CP000819.1:1500-2000 > CP000819.1_1500_2000_variants.vcf
-```
-
-This command would create a new VCF file containing only the variants found within the specified region on `CP000819.1`.
-
-## Conclusion
-
-VCF files are essential for understanding genetic variations. Tools like `bcftools` and `samtools`, along with programming languages like R, help us analyze these files. By focusing on specific chromosomes or regions, we can conduct more targeted and efficient research, leading to important discoveries in genetics and medicine.
-
----
