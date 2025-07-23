@@ -40,7 +40,7 @@ Analyzing VCF files helps scientists understand genetic differences between indi
 To get a summary of statistics from your VCF file:
 
 ```bash
-gbzip SRR2584866_variants.vcf
+bgzip SRR2584866_variants.vcf
 tabix SRR2584866_variants.vcf.gz
 bcftools stats SRR2584866_variants.vcf.gz
 ```
