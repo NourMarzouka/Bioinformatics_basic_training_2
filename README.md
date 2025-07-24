@@ -106,6 +106,8 @@ Instead of analyzing an entire genome, scientists often focus on specific chromo
 
 #### Step 7: Subset FASTQ files
 # Subset the first 1000 sequences (4000 lines) from paired-end FASTQ files
+```bash
 head -n 4000 SRR2584866_1.trim.sub.fastq > 1000_reads_1.fastq
 
 head -n 4000 SRR2584866_2.trim.sub.fastq > 1000_reads_2.fastq
+```
