@@ -103,3 +103,8 @@ Instead of analyzing an entire genome, scientists often focus on specific chromo
 *   **Targeted Analysis:** Allows for deeper investigation of areas known or suspected to be involved in a particular trait or disease.
 *   **Reduced Computational Load:** Analyzing smaller datasets is faster and requires less computing power.
 *   **Clinical Relevance:** Many genetic disorders are associated with specific chromosomal regions (e.g., Down syndrome with chromosome 21, certain cancers with specific genes on particular chromosomes).
+
+#### Step 7: Subset FASTQ files
+# Subset the first 1000 sequences (4000 lines) from paired-end FASTQ files
+head -n 4000 SRR2584866_1.trim.sub.fastq > SRR2584866_1.trim.sub.1000.fastq
+head -n 4000 SRR2584866_2.trim.sub.fastq > SRR2584866_2.trim.sub.1000.fastq
